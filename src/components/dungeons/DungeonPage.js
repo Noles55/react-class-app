@@ -8,14 +8,10 @@ import {Paper} from "@material-ui/core";
 import DungeonInfo from "./DungeonInfo";
 
 function DungeonPage({campaign, dungeon, actions}) {
-    console.log(actions);
-    console.log(campaign);
-
+   
     useEffect(() => {
-        if (campaign === undefined || campaign === null) {
-            console.log("Reloading campaigns");
-            actions.loadCampaigns();
-        }
+      console.log(campaign);
+      console.log(dungeon);
     });
 
     if (campaign === undefined || campaign === null)

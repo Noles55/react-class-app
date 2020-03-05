@@ -11,21 +11,12 @@ function CampaignsPage({campaigns, dungeons, actions, history}) {
     const [addCampaignValue, setAddCampaignValue] = useState("");
 
     useEffect( () => {
-        if (campaigns.length === 0) {
-            console.log("Loading campaigns");
-            actions.loadCampaigns();
-        }
-
-        if (dungeons.length === 0) {
-            console.log("Loading dungeons");
-            actions.loadDungeons();
-        }
+        console.log(campaigns)
+        console.log(dungeons)
     });
 
     const handleNewCampaign = (event) => {
         event.preventDefault();
-
-        console.log(dungeons.size);
 
         // Cant find black barrow in dungeons list
         const newDungeon = dungeons.find(dungeon => dungeon.name === "The Black Barrow") || {
@@ -33,10 +24,9 @@ function CampaignsPage({campaigns, dungeons, actions, history}) {
             reward: "None"
         };
 
-        actions.saveCampaign({"partyName":addCampaignValue, "currentDungeon":newDungeon }).then(() => {
-            setAddCampaignValue("");
-            history.push("/campaign/" + addCampaignValue + "/The Black Barrow");
-        }).catch(error => {});
+        actions.createCampaign({"partyName":addCampaignValue, "currentDungeon":newDungeon })
+        setAddCampaignValue("");
+        history.push("/campaign/" + addCampaignValue + "/The Black Barrow");
     };
 
     const handleChangeNewCampaign = (event) => {
