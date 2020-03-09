@@ -1,4 +1,5 @@
 export default {
     campaigns: [],
-    dungeons: []
+    dungeons: [],
+    characters: []
 }

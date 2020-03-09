@@ -26,7 +26,7 @@ function CampaignsPage({campaigns, dungeons, actions, history}) {
 
         actions.createCampaign({"partyName":addCampaignValue, "currentDungeon":newDungeon })
         setAddCampaignValue("");
-        history.push("/campaign/" + addCampaignValue + "/The Black Barrow");
+        history.push("/campaign/" + addCampaignValue + "/characters");
     };
 
     const handleChangeNewCampaign = (event) => {
