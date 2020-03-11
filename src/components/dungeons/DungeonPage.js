@@ -6,6 +6,7 @@ import * as campaignActions from '../../redux/actions/campaignActions'
 import Grid from "@material-ui/core/Grid";
 import {Paper} from "@material-ui/core";
 import DungeonInfo from "./DungeonInfo";
+import CharacterList from "../characters/CharacterList";
 
 function DungeonPage({campaign, dungeon, actions}) {
    
@@ -22,20 +23,21 @@ function DungeonPage({campaign, dungeon, actions}) {
             <h2 style={{"padding":"10px"}}>
                 {campaign.partyName}
             </h2>
+            <CharacterList campaign={campaign}/>
             <Grid container spacing={2} style={{"padding":"10px"}}>
                 <Grid item xs={3}>
-                    <Paper style={{"background":"gray"}}>
+                    <Paper style={{"padding":"10px"}} variant="elevation" elevation={3}>
                         <h5 align="center">Links From</h5>
                     </Paper>
                 </Grid>
                 <Grid item xs={6}>
-                    <Paper style={{"background":"gray"}}>
+                    <Paper style={{"padding":"10px"}} variant="elevation" elevation={3}>
                         <h4 align="center">{dungeon.name}</h4>
                         <DungeonInfo dungeon={dungeon}/>
                     </Paper>
                 </Grid>
                 <Grid item xs={3}>
-                    <Paper style={{"background":"gray"}}>
+                    <Paper style={{"padding":"10px"}} variant="elevation" elevation={3}>
                         <h5 align="center">Links To</h5>
                     </Paper>
                 </Grid>
