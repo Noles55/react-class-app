@@ -9,3 +9,13 @@ export function saveCampaign(campaign) {
       dispatch(createCampaign(campaign));
   }
 }
+
+export function addCharacter(campaign, character) {
+  return {type: types.ADD_CHARACTER, campaign: campaign, character: character}
+}
+
+export function addNewCharacter(campaign, character) {
+  return function (dispatch) {
+    dispatch(addCharacter(campaign, character));
+  }
+}

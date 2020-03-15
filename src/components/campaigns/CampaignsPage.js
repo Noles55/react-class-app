@@ -24,7 +24,7 @@ function CampaignsPage({campaigns, dungeons, actions, history}) {
             reward: "None"
         };
 
-        actions.createCampaign({"partyName":addCampaignValue, "currentDungeon":newDungeon })
+        actions.createCampaign({"partyName":addCampaignValue, "currentDungeon":newDungeon, "characters": []})
         setAddCampaignValue("");
         history.push("/campaign/" + addCampaignValue + "/characters");
     };

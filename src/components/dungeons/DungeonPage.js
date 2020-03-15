@@ -20,7 +20,7 @@ function DungeonPage({campaign, dungeon, actions}) {
 
     return (
         <div>
-            <h2 style={{"padding":"10px"}}>
+            <h2>
                 {campaign.partyName}
             </h2>
             <CharacterList campaign={campaign}/>

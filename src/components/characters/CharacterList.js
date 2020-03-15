@@ -1,32 +1,43 @@
-import React from "react";
+import React, { useState, Fragment } from "react";
 import PropTypes from 'prop-types';
-import * as campaignActions from "../../redux/actions/campaignActions";
-import * as characterActions from "../../redux/actions/characterActions";
-import {bindActionCreators} from "redux";
-import {connect} from 'react-redux';
 import CharacterInfo from "../characters/CharacterInfo";
+import {Button} from "@material-ui/core"
 
-function CharacterList({campaign, actions}) {
+function CharacterList({campaign}) {
+    const [localCharacterList, setLocalCharacterList] = useState(campaign.characters || [null])
+    
+    const addLocalCharacter = () => {
+        setLocalCharacterList([...localCharacterList, null])
+    }
 
     return (
-        <div>
-            <CharacterInfo/>
-        </div>
+        <Fragment>
+            <table>
+                <thead>
+                    <tr>
+                        {localCharacterList.map(character => {
+                         return (
+                             <th key={character}>
+                                <CharacterInfo campaign={campaign} character={character}/>
+                             </th>
+                            );
+                        })}
+                        <th>
+                            {localCharacterList.length < 4 && 
+                                <Button style={{"marginLeft":"10px"}} color="primary" variant="contained" size="small" onClick={addLocalCharacter}>
+                                    +
+                                </Button>
+                            }
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </Fragment>
     )
-}
-
-function addCharacter() {
-    console.log("Adding Character");
 }
 
 CharacterList.propTypes = {
     campaign: PropTypes.object.isRequired
 };
 
-function mapDispatchToProps(dispatch) {
-    return {
-        actions: bindActionCreators({...campaignActions, ...characterActions}, dispatch)
-    }
-}
-
-export default connect(mapDispatchToProps)(CharacterList);
+export default CharacterList;

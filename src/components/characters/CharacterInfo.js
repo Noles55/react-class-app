@@ -1,45 +1,49 @@
-import React, {useState} from "react";
+import React, {useState, Fragment} from "react";
 import PropTypes from 'prop-types';
-import {Button, TextField} from "@material-ui/core"
+import {TextField} from "@material-ui/core"
+import * as campaignActions from "../../redux/actions/campaignActions";
+import {bindActionCreators} from "redux";
+import {connect} from 'react-redux';
 
-function CharacterInfo({character}) {
+function CharacterInfo({campaign, character, actions}) {
 
-    const [inputActive, setInputActive] = useState(false)
     const [newCharacterValue, setCharacterValue] = useState("")
 
 
     const handleNewCharacter = (event) => {
-        event.preventDefault()
-       // Use Redux
-
+        event.preventDefault();
+        character = {}
+        character.name = newCharacterValue
+        actions.addNewCharacter(campaign, character)
     }
 
     const handleNewCharacterChange = (event) => {
         setCharacterValue(event.target.value)
     }
 
-    const addCharacter = () => {
-        setInputActive(true)
-    }
-
     return (
-        <h5 style={{"padding":"10px", "white-space":"nowrap"}}>Party Members: 
-            {inputActive ? 
-                //This will be replaced by DynamicTextField??
-                <form onSubmit={handleNewCharacter}>
+        <Fragment>
+            {character == null ? 
+                <form style={{"padding":"10px"}} onSubmit={handleNewCharacter}>
                     <TextField value={newCharacterValue} id="standard-basic" label="New Character" margin="dense" onChange={handleNewCharacterChange}/>
                 </form>
             :
-                <Button style={{"marginLeft":"10px"}} color="primary" variant="contained" size="small" onClick={addCharacter}>
-                    +
-                </Button>}
-        </h5>
-
+                character.name
+            }   
+        </Fragment>
     )
 }
 
 CharacterInfo.propTypes = {
-   character: PropTypes.object.isRequired
+    campaign: PropTypes.object.isRequired,
+    character: PropTypes.object,
+    actions: PropTypes.object.isRequired
 };
 
-export default CharacterInfo
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators({...campaignActions}, dispatch)
+    }
+}
+
+export default connect(null, mapDispatchToProps)(CharacterInfo)
