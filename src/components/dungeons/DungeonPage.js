@@ -9,12 +9,8 @@ import {Paper} from "@material-ui/core";
 import DungeonInfo from "./DungeonInfo";
 import CharacterList from "../characters/CharacterList";
 
-function DungeonPage({campaign, dungeon, actions}) {
+function DungeonPage({campaign, dungeon, nextDungeon, prevDungeon, actions}) {
     
-    useEffect(() => {
-        actions.createDungeon(dungeon);
-    })
-
     return (
         <div>
             <h2>
@@ -25,19 +21,18 @@ function DungeonPage({campaign, dungeon, actions}) {
                 <Grid item xs={3}>
                     <Paper style={{"padding":"10px"}} variant="elevation" elevation={3}>
                         <h5 align="center">Links From</h5>
-                        <DungeonInfo dungeon={dungeon.prev}/>
+                        <DungeonInfo dungeon={prevDungeon}/>
                     </Paper>
                 </Grid>
                 <Grid item xs={6}>
                     <Paper style={{"padding":"10px"}} variant="elevation" elevation={3}>
-                        
                         <DungeonInfo dungeon={dungeon}/>
                     </Paper>
                 </Grid>
                 <Grid item xs={3}>
                     <Paper style={{"padding":"10px"}} variant="elevation" elevation={3}>
                         <h5 align="center">Links To</h5>
-                        <DungeonInfo dungeon={dungeon.next}/>
+                        <DungeonInfo dungeon={nextDungeon}/>
                     </Paper>
                 </Grid>
             </Grid>
@@ -48,6 +43,8 @@ function DungeonPage({campaign, dungeon, actions}) {
 DungeonPage.propTypes = {
     dungeon: PropTypes.object,
     campaign: PropTypes.object,
+    nextDungeon: PropTypes.object,
+    prevDungeon: PropTypes.object,
     actions: PropTypes.object.isRequired
 }
 
@@ -62,13 +59,18 @@ function mapStateToProps(state, ownProps) {
     if (currentCampaign === undefined)
         currentCampaign = null;
 
-    let dungeon = null;
+    let currentDungeon = null;
     if (currentCampaign !== null)
-        dungeon = currentCampaign.currentDungeon;
+        currentDungeon = currentCampaign.currentDungeon;
+
+    let nextDungeon = state.dungeons.find((dungeon) => (dungeon.name === currentDungeon.next)) || {};
+    let prevDungeon = state.dungeons.find((dungeon) => (dungeon.name === currentDungeon.prev)) || {};
 
     return {
         campaign: currentCampaign,
-        dungeon: dungeon
+        dungeon: currentDungeon,
+        nextDungeon: nextDungeon,
+        prevDungeon: prevDungeon
     }
 }
 

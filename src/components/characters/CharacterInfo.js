@@ -8,16 +8,10 @@ import {connect} from 'react-redux';
 function CharacterInfo({campaign, character, actions}) {
 
     const [newCharacterValue, setCharacterValue] = useState("")
-
-
+    const [localCharacterName, setLocalCharacterName] = useState(character ? character.name : null)
     const handleNewCharacter = (event) => {
         event.preventDefault();
-        var localCharacter = {}
-        localCharacter.name = newCharacterValue
-
-        console.log(localCharacter.name);
-        
-        actions.addNewCharacter(campaign, localCharacter)
+        setLocalCharacterName(newCharacterValue)
     }
 
     const handleNewCharacterChange = (event) => {
@@ -26,12 +20,14 @@ function CharacterInfo({campaign, character, actions}) {
 
     return (
         <Fragment>
-            {character == null ? 
+            {localCharacterName == null ? 
                 <form style={{"padding":"10px"}} onSubmit={handleNewCharacter}>
                     <TextField value={newCharacterValue} id="standard-basic" label="New Character" margin="dense" onChange={handleNewCharacterChange}/>
                 </form>
             :
-                character.name
+                <h3 style={{"paddingRight":"40px"}}>
+                    {localCharacterName}
+                </h3> 
             }   
         </Fragment>
     )

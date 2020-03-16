@@ -11,7 +11,7 @@ function CharacterList({campaign}) {
     }
 
     useEffect(() => {
-        if (localCharacterList.length == 0) {
+        if (localCharacterList.length === 0) {
             setLocalCharacterList([null]);
         }
     });

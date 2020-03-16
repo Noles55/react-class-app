@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, Fragment} from "react";
 import {bindActionCreators} from "redux";
 import * as campaignActions from "../../redux/actions/campaignActions";
 import * as dungeonActions from "../../redux/actions/dungeonActions";
@@ -13,15 +13,31 @@ function CampaignsPage({campaigns, dungeons, actions, history}) {
     const handleNewCampaign = (event) => {
         event.preventDefault();
 
+        const nextDungeon = {
+            name: "The Barrow Lair",
+            reward: "20g, item",
+            objective: "Kill all revealed enemies and the scenario boss",
+            enemies: ["Bandit Archer", "Bandit Guard", "Living Bones"],
+            boss: "Yes",
+            prev: "The Black Barrow",
+            next: null,
+        }
+
         // Cant find black barrow in dungeons list
         const newDungeon = dungeons.find(dungeon => dungeon.name === "The Black Barrow") || {
             name: "The Black Barrow",
+            objective: "Kill all enemies",
             reward: "10g",
-            next: null,
+            enemies: ["Bandit Archer", "Bandit Guard", "Living Bones"],
+            boss: "No",
+            next: nextDungeon.name,
             prev: null
         };
 
+
         actions.createCampaign({"partyName":addCampaignValue, "currentDungeon":newDungeon, "characters": []})
+        actions.createDungeon(newDungeon);
+        actions.createDungeon(nextDungeon);
         setAddCampaignValue("");
         history.push("/campaign/" + addCampaignValue + "/" + newDungeon.name);
     };
