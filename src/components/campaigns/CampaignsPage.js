@@ -10,23 +10,20 @@ import {TextField} from "@material-ui/core";
 function CampaignsPage({campaigns, dungeons, actions, history}) {
     const [addCampaignValue, setAddCampaignValue] = useState("");
 
-    useEffect( () => {
-        console.log(campaigns)
-        console.log(dungeons)
-    });
-
     const handleNewCampaign = (event) => {
         event.preventDefault();
 
         // Cant find black barrow in dungeons list
         const newDungeon = dungeons.find(dungeon => dungeon.name === "The Black Barrow") || {
             name: "The Black Barrow",
-            reward: "None"
+            reward: "10g",
+            next: null,
+            prev: null
         };
 
         actions.createCampaign({"partyName":addCampaignValue, "currentDungeon":newDungeon, "characters": []})
         setAddCampaignValue("");
-        history.push("/campaign/" + addCampaignValue + "/characters");
+        history.push("/campaign/" + addCampaignValue + "/" + newDungeon.name);
     };
 
     const handleChangeNewCampaign = (event) => {

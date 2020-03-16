@@ -12,9 +12,12 @@ function CharacterInfo({campaign, character, actions}) {
 
     const handleNewCharacter = (event) => {
         event.preventDefault();
-        character = {}
-        character.name = newCharacterValue
-        actions.addNewCharacter(campaign, character)
+        var localCharacter = {}
+        localCharacter.name = newCharacterValue
+
+        console.log(localCharacter.name);
+        
+        actions.addNewCharacter(campaign, localCharacter)
     }
 
     const handleNewCharacterChange = (event) => {

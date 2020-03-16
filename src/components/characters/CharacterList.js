@@ -1,14 +1,20 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import PropTypes from 'prop-types';
 import CharacterInfo from "../characters/CharacterInfo";
 import {Button} from "@material-ui/core"
 
 function CharacterList({campaign}) {
-    const [localCharacterList, setLocalCharacterList] = useState(campaign.characters || [null])
+    const [localCharacterList, setLocalCharacterList] = useState(campaign.characters)
     
     const addLocalCharacter = () => {
         setLocalCharacterList([...localCharacterList, null])
     }
+
+    useEffect(() => {
+        if (localCharacterList.length == 0) {
+            setLocalCharacterList([null]);
+        }
+    });
 
     return (
         <Fragment>

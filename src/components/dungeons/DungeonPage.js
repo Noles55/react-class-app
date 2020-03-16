@@ -2,21 +2,18 @@ import React, {useEffect} from "react";
 import {PropTypes} from 'prop-types';
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import * as campaignActions from '../../redux/actions/campaignActions'
+import * as campaignActions from '../../redux/actions/campaignActions';
+import * as dungeonActions from '../../redux/actions/dungeonActions';
 import Grid from "@material-ui/core/Grid";
 import {Paper} from "@material-ui/core";
 import DungeonInfo from "./DungeonInfo";
 import CharacterList from "../characters/CharacterList";
 
 function DungeonPage({campaign, dungeon, actions}) {
-   
+    
     useEffect(() => {
-      console.log(campaign);
-      console.log(dungeon);
-    });
-
-    if (campaign === undefined || campaign === null)
-        return <p>Loading....</p>;
+        actions.createDungeon(dungeon);
+    })
 
     return (
         <div>
@@ -28,17 +25,19 @@ function DungeonPage({campaign, dungeon, actions}) {
                 <Grid item xs={3}>
                     <Paper style={{"padding":"10px"}} variant="elevation" elevation={3}>
                         <h5 align="center">Links From</h5>
+                        <DungeonInfo dungeon={dungeon.prev}/>
                     </Paper>
                 </Grid>
                 <Grid item xs={6}>
                     <Paper style={{"padding":"10px"}} variant="elevation" elevation={3}>
-                        <h4 align="center">{dungeon.name}</h4>
+                        
                         <DungeonInfo dungeon={dungeon}/>
                     </Paper>
                 </Grid>
                 <Grid item xs={3}>
                     <Paper style={{"padding":"10px"}} variant="elevation" elevation={3}>
                         <h5 align="center">Links To</h5>
+                        <DungeonInfo dungeon={dungeon.next}/>
                     </Paper>
                 </Grid>
             </Grid>
@@ -75,7 +74,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({...campaignActions}, dispatch)
+        actions: bindActionCreators({...dungeonActions, ...campaignActions}, dispatch)
     }
 }
 

@@ -7,12 +7,13 @@ export default function campaignReducer(state = initialState.campaigns, action)
         case types.CREATE_CAMPAIGN:
             return [...state, {...action.campaign}];
         case types.ADD_CHARACTER:
-            return state.map((campaign) => {
+            var localState = state;
+            for (var campaign in localState) {
                 if (campaign.partyName === action.campaign.partyName) {
-                    return [...campaign.characters, action.character]
+                    campaign.characters.push(action.character);
                 }
-                return campaign;
-            });
+            }
+            return localState;
         default:
             return state;
     }
